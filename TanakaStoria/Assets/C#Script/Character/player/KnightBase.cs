@@ -13,7 +13,7 @@ namespace character
         // Use this for initialization
         void Start()
         {
-            _character = GameObject.Find("character_knight");
+            //_character = GameObject.Find("character_knight");
             _animator = anim_object.GetComponent<Animator>();
             //_animator = GameObject.Find("body").GetComponent<Animator>();
             //_animator = GetComponent<Animator>();
@@ -30,6 +30,21 @@ namespace character
 
             // アニメーション
             BaseAnimation();
+        }
+
+        // Collider2D
+        void OnTriggerEnter2D(Collider2D unit_collider)
+        {
+            // レイヤー名を取得
+            string layer_name = LayerMask.LayerToName(unit_collider.gameObject.layer);
+
+            // 反対勢力ユニットの場合
+            if (layer_name == "EnemyUnit" && _target_object == null)
+            {
+                _target_object = unit_collider.gameObject;
+                _move_speed = 0.0f;
+
+            }
         }
     }
 }

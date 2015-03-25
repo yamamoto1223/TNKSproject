@@ -9,7 +9,7 @@ namespace character
         // Use this for initialization
         void Start()
         {
-            _character = GameObject.Find("UnityChan2D");
+            //_character = GameObject.Find("UnityChan2D");
             _animator = GetComponent<Animator>();
         }
 

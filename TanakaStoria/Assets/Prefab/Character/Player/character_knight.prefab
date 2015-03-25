@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 440340}
   - 212: {fileID: 21240342}
   - 95: {fileID: 9540360}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 440342}
   - 212: {fileID: 21240344}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: r_leg_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 440344}
   - 212: {fileID: 21240346}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: r_leg_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,8 @@ GameObject:
   - 4: {fileID: 440346}
   - 50: {fileID: 5040362}
   - 114: {fileID: 11440362}
-  m_Layer: 0
+  - 61: {fileID: 6171078}
+  m_Layer: 10
   m_Name: character_knight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +77,7 @@ GameObject:
   - 4: {fileID: 440348}
   - 212: {fileID: 21240348}
   - 95: {fileID: 9540362}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +93,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 440350}
   - 212: {fileID: 21240350}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +109,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 440352}
   - 212: {fileID: 21240352}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: hachimaki_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +125,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 440354}
   - 212: {fileID: 21240354}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: r_arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +141,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 440356}
   - 212: {fileID: 21240356}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: l_arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,7 +157,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 440358}
   - 212: {fileID: 21240358}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: l_leg_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,7 +173,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 440360}
   - 212: {fileID: 21240360}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: l_leg_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -188,7 +189,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 440362}
   - 212: {fileID: 21240362}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: hachimaki_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -365,6 +366,17 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+--- !u!61 &6171078
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 140346}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Size: {x: 2, y: 2}
+  m_Center: {x: 0, y: 0}
 --- !u!95 &9540360
 Animator:
   serializedVersion: 3
@@ -406,6 +418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dc1c700a77e3534bb2cb086eca9b9a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  base_object: {fileID: 0}
   anim_object: {fileID: 140340}
 --- !u!212 &21240342
 SpriteRenderer:

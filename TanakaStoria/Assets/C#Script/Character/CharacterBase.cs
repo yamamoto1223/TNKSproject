@@ -12,7 +12,7 @@ namespace character
         protected Vector2 _chara_pos;  // 座標
         protected Vector2 _chara_vel;  // 速度
 
-        protected GameObject    _character;
+        protected GameObject _target_object;
         protected Animator      _animator;
         private GameManager     _game_manager;     
       
@@ -70,8 +70,9 @@ namespace character
             }
 
             // 攻撃
-            if (_chara_pos.x >= 3.5f){
- //               animIndex = (int)MotionIndex.MOTIOM_ATTACK;
+            if (_target_object != null)
+            {
+                animIndex = (int)MotionIndex.MOTIOM_ATTACK;
             }
 
             // アニメーション変更
@@ -92,11 +93,11 @@ namespace character
         protected void SpriteReverse()
         {
             Vector3 scale = transform.localScale; // サイズの取得
-            if (_chara_vel.x >= 0)
+            if( _chara_vel.x >= 0.1f )
             {
                 scale.x = 1; // そのまま（右向き）
             }
-            else
+            if (_chara_vel.x <= -0.1f )
             {
                 scale.x = -1; // 反転する（左向き）
             }
