@@ -22,15 +22,15 @@ namespace character
             // アニメーション
             BaseAnimation();
 
-            // sample うろうろする
-            if (pos.x > 4.0f)
-            {
-                direction.x = -1.0f;
-            }
-            if (pos.x < -4.0f)
-            {
-                direction.x = 1.0f;
-            }
+            //// sample うろうろする
+            //if (_chara_pos.x > 4.0f)
+            //{
+            //    _direction.x = -1.0f;
+            //}
+            //if (_chara_pos.x < -4.0f)
+            //{
+            //    _direction.x = 1.0f;
+            //}
         }
     }
 }

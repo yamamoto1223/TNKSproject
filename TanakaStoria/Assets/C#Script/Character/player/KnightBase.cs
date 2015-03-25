@@ -13,9 +13,12 @@ namespace character
         void Start()
         {
             _charactor = GameObject.Find("character_knight");
+            _animator = anim_object.GetComponent<Animator>();
             //_animator = GameObject.Find("body").GetComponent<Animator>();
             //_animator = GetComponent<Animator>();
-            _animator = anim_object.GetComponent<Animator>();
+
+            // 初期化
+            InitPlayerUnit();
         }
 
         // Update is called once per frame

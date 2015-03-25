@@ -10,8 +10,8 @@ namespace define
         MOTION_STAY = 0,
         MOTION_WALK,
         MOTIOM_ATTACK,
-        MOTION_KNOCK_BACK,
-        MOTION_BACK,
+        MOTION_DAMAGE,
+        MOTION_DEAD,
         MOTION_MAX,
     }
 
