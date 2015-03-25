@@ -12,7 +12,7 @@ namespace character
         protected Vector2 _chara_pos;  // 座標
         protected Vector2 _chara_vel;  // 速度
 
-        protected GameObject _target_object;
+        protected GameObject    _target_object;
         protected Animator      _animator;
         private GameManager     _game_manager;     
       
@@ -30,7 +30,6 @@ namespace character
         void Start()
         {
             
-
         }
 
         // Update is called once per frame
@@ -115,6 +114,15 @@ namespace character
             //}
             rigidbody2D.velocity = direction * _move_speed;
 
+        }
+
+        // Stateクラス
+        public abstract class State
+        {
+            //状態に依存する振る舞いのインタフェースを定義します。
+            public abstract void Init();
+            public abstract void Exe();
+            public abstract void Exit();
         }
 
 
