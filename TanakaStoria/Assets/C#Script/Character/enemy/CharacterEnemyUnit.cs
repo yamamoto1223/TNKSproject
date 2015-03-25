@@ -21,7 +21,7 @@ namespace character
         protected void InitEnemyUnit()
         {
             // 初期化
-            _move_speed = 1.0f;
+            _move_speed = 3.0f;
             _direction.Set(-1.0f, 0.0f);
         }
 

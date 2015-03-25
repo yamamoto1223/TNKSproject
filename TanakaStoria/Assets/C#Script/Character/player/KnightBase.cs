@@ -30,6 +30,13 @@ namespace character
 
             // アニメーション
             BaseAnimation();
+
+            // 殺害
+            if (_target_object != null)
+            {
+                Destroy(_target_object);
+                _move_speed = 1.0f;
+            }
         }
 
         // Collider2D
@@ -43,7 +50,7 @@ namespace character
             {
                 _target_object = unit_collider.gameObject;
                 _move_speed = 0.0f;
-
+                
             }
         }
     }
