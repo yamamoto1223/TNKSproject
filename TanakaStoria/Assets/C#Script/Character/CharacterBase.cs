@@ -12,7 +12,7 @@ namespace character
         protected Vector2 _chara_pos;  // 座標
         protected Vector2 _chara_vel;  // 速度
 
-        protected GameObject    _charactor;
+        protected GameObject    _character;
         protected Animator      _animator;
         private GameManager     _game_manager;     
       

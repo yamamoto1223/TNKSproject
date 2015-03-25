@@ -9,3 +9,14 @@ C:\Users\OTWO-115\Documents\TanakaStoria\obj\Debug\Assembly-CSharp.pdb
 C:\Users\OTWO-115\Documents\TanakaStoria\Temp\UnityVS_bin\Debug\UnityEngine.UI.dll
 C:\Users\OTWO-115\Documents\TanakaStoria\Temp\UnityVS_bin\Debug\UnityEngine.UI.xml
 C:\Users\OTWO-115\Documents\TanakaStoria\obj\Debug\UnityVS.TanakaStoria.CSharp.csprojResolveAssemblyReference.cache
+C:\Users\OTWO-115\Documents\GitHub\TNKSproject\TanakaStoria\Temp\UnityVS_bin\Debug\Assembly-CSharp.dll
+C:\Users\OTWO-115\Documents\GitHub\TNKSproject\TanakaStoria\Temp\UnityVS_bin\Debug\Assembly-CSharp.pdb
+C:\Users\OTWO-115\Documents\GitHub\TNKSproject\TanakaStoria\Temp\UnityVS_bin\Debug\UnityEditor.dll
+C:\Users\OTWO-115\Documents\GitHub\TNKSproject\TanakaStoria\Temp\UnityVS_bin\Debug\UnityEngine.dll
+C:\Users\OTWO-115\Documents\GitHub\TNKSproject\TanakaStoria\Temp\UnityVS_bin\Debug\UnityEngine.UI.dll
+C:\Users\OTWO-115\Documents\GitHub\TNKSproject\TanakaStoria\Temp\UnityVS_bin\Debug\UnityEngine.xml
+C:\Users\OTWO-115\Documents\GitHub\TNKSproject\TanakaStoria\Temp\UnityVS_bin\Debug\UnityEditor.xml
+C:\Users\OTWO-115\Documents\GitHub\TNKSproject\TanakaStoria\Temp\UnityVS_bin\Debug\UnityEngine.UI.xml
+C:\Users\OTWO-115\Documents\GitHub\TNKSproject\TanakaStoria\obj\Debug\UnityVS.TanakaStoria.CSharp.csprojResolveAssemblyReference.cache
+C:\Users\OTWO-115\Documents\GitHub\TNKSproject\TanakaStoria\obj\Debug\Assembly-CSharp.dll
+C:\Users\OTWO-115\Documents\GitHub\TNKSproject\TanakaStoria\obj\Debug\Assembly-CSharp.pdb
