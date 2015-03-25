@@ -1,0 +1,17 @@
+unity用２Dデータフォーマット
+随時更新していきます
+
+「キャラクター名」(フォルダ)
+	∟「Animations」（フォルダ）
+		∟「Animator」(Animator Controllerコンポーネント)
+		∟「Stay」	(Animationコンポーネント)
+		∟「Walk」	(Animationコンポーネント)
+		∟「Attack」	(Animationコンポーネント)
+		∟「Dead」	(Animationコンポーネント)
+		∟「Damage」	(Animationコンポーネント)
+	∟「Sprites」(フォルダ)　※こっちは好きにしていいよん
+		∟「body」（テクスチャ）
+			∟「arm」
+			∟「leg」
+			∟　…etc
+	

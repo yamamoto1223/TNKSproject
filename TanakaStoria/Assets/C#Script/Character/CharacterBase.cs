@@ -7,27 +7,28 @@ namespace character
 {
     public class CharacterBase : MonoBehaviour
     {
-        protected bool _isWalk = false;
-        protected bool _isStay = false;
-        protected bool _isAttack = false;
+        //protected bool _isWalk = false;
+        //protected bool _isStay = false;
+        //protected bool _isAttack = false;
+        //protected bool _isDead = false;
+        //protected bool _isDamage = false;
         // private float _timer = 0.0f;
 
-        // animation
         protected float spd = 5.0f;
         protected Vector2 direction = new Vector2(1.0f, 0).normalized;  // 移動する向き
         protected Vector2 pos;  // 座標
         protected Vector2 vel;  // 速度
 
-        public GameObject _charactor;
-        public Animator _animator;
-        private GameManager gm;     // sample
+        protected GameObject    _charactor;
+        protected Animator      _animator;
+        private GameManager     _game_manager;     
       
         // アニメーションテーブル
         protected string[] AnimationTable = new string[(int)MotionIndex.MOTION_MAX]{
             "isStay",
             "isWalk",
             "isAttack",
-            "isJump",
+            "isDamage",
             "isDead",
         };
         protected int animIndex;// = MotionIndex.MOTION_STAY;
@@ -71,7 +72,7 @@ namespace character
                 animIndex = (int)MotionIndex.MOTION_WALK;
             // 待機
             }else{
- //               animIndex = (int)MotionIndex.MOTION_STAY;
+                animIndex = (int)MotionIndex.MOTION_STAY;
             }
 
             // 攻撃
@@ -80,7 +81,7 @@ namespace character
             }
 
             // アニメーション変更
-            for (int i = 0; i < 3/*(int)MotionIndex.MOTION_MAX*/; i++)
+            for (int i = 0; i < (int)MotionIndex.MOTION_MAX; i++)
             {
                 bool animFlag = i == (int)animIndex;
                 _animator.SetBool(AnimationTable[i], animFlag);
