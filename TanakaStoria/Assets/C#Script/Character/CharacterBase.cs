@@ -7,16 +7,14 @@ namespace character
 {
     public class CharacterBase : MonoBehaviour
     {
-        public float _move_speed = 5.0f;
-        public Vector2 _direction = new Vector2(1.0f, 0).normalized;  // 移動する向き
-        public Vector2 _chara_pos;  // 座標
-        public Vector2 _chara_vel;  // 速度
+        protected float _move_speed = 5.0f;
+        protected Vector2 _direction = new Vector2(1.0f, 0).normalized;  // 移動する向き
+        protected Vector2 _chara_pos;  // 座標
+        protected Vector2 _chara_vel;  // 速度
 
-        public GameObject _target_object;
-        public Animator _animator;
-        //private GameManager     _game_manager;
-
-        public StateManager state_manager = new StateManager();
+        protected GameObject    _target_object;
+        protected Animator      _animator;
+        private GameManager     _game_manager;     
       
         // アニメーションテーブル
         protected string[] AnimationTable = new string[(int)MotionIndex.MOTION_MAX]{
@@ -29,22 +27,23 @@ namespace character
         protected int animIndex;// = MotionIndex.MOTION_STAY;
         
         // Use this for initialization
-        void Start(){ }
-        // Update is called once per frame
-        void Update(){ }
-
-        // ユニットの初期化
-        protected void CharacterBaseInit()
+        void Start()
         {
             
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
         }
 
         // ユニットの基本動作
         protected void CharacterBaseUpdate()
         {
             // 座標・速度
-            //_chara_pos = rigidbody2D.position;   // 座標を取得
-            //_chara_vel = rigidbody2D.velocity;   // 速度を取得
+            _chara_pos = rigidbody2D.position;   // 座標を取得
+            _chara_vel = rigidbody2D.velocity;   // 速度を取得
 
             // 移動
             Move(_direction);
@@ -80,20 +79,13 @@ namespace character
             {
                 bool animFlag = i == (int)animIndex;
                 _animator.SetBool(AnimationTable[i], animFlag);
+
             }
         }
 
-        public void ChangeAnimation( int index )
-        {
-            animIndex = index;
+        protected void ChangeAnimation()
+        { 
 
-            // アニメーション変更
-            for (int i = 0; i < (int)MotionIndex.MOTION_MAX; i++)
-            {
-                bool animFlag = i == (int)animIndex;
-                _animator.SetBool(AnimationTable[i], animFlag);
-
-            }
         }
 
         // reverse sprite
@@ -127,60 +119,12 @@ namespace character
         // Stateクラス
         public abstract class State
         {
-            protected GameObject animator;
-            protected CharacterBase unit;
-            public void SetUnitInstance( CharacterBase parent ){ unit = parent; }
-            public void SetAnimatorObj(GameObject obj) { animator = obj; }
-
             //状態に依存する振る舞いのインタフェースを定義します。
             public abstract void Init();
             public abstract void Exe();
             public abstract void Exit();
         }
 
-        // StateManagerクラス
-        public class StateManager
-        {
-            // 状態を保持するプロパティを定義します。
-            private State current_state;
-            protected GameObject animator;
-            protected CharacterBase unit;
 
-            // Setter&Getter関数
-            public void SetAnimatorObj(GameObject obj) { animator = obj; }
-            public GameObject GetAnimatorObj() { return animator; }
-            public void SetUnitInstance(CharacterBase parent) { unit = parent; }
-            public CharacterBase GetUnitInstance() { return unit; }
-
-
-            // 初期化
-            public void InitializeState( State state)
-            {
-                // インスタンスセット
-                state.SetUnitInstance(unit);
-                state.SetAnimatorObj(animator);
-               
-                state.Init();
-                current_state = state;
-            }
-           
-            // 状態遷移
-            public void ChangeState(State next_state)
-            {
-                // 現在の状態の終了
-                current_state.Exit();
-
-                // 次の状態へ遷移する準備
-                next_state.SetUnitInstance(unit);
-                next_state.Init();
-                current_state = next_state;
-            }
-
-            //保持している状態オブジェクトに対して処理を送ります。
-            public void StateExe()
-            {
-                current_state.Exe();
-            }
-        }
     }
 }

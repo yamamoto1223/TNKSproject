@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-using define;
-
 namespace character
 {
 
@@ -12,26 +10,24 @@ namespace character
         public GameObject base_object;  // 自身のキャラクターオブジェクト
         public GameObject anim_object;  // アニメーションオブジェクト
 
+        public StateManager state_manager = new StateManager();
         public State_Walk walk = new State_Walk();
         public State_Stay stay = new State_Stay();
-        public State_Attack attack = new State_Attack();
-        public CharacterBase parent;
-       
 
         // Use this for initialization
         void Start()
         {
-            // AnimationControllerコンポーネント取得
+            //_character = GameObject.Find("character_knight");
             _animator = anim_object.GetComponent<Animator>();
+            //_animator = GameObject.Find("body").GetComponent<Animator>();
+            //_animator = GetComponent<Animator>();
 
             // 初期化
-            CharacterBaseInit();
-            PlayerUnitInit();
+            InitPlayerUnit();
 
             // stateクラス初期化
-            state_manager.SetUnitInstance(this);
-            state_manager.SetAnimatorObj(anim_object);
-            state_manager.InitializeState( walk);
+            state_manager.InitializeState(stay);
+
         }
 
         // Update is called once per frame
@@ -39,20 +35,23 @@ namespace character
         {
             // キャラクタの基本動作
             CharacterBaseUpdate();
-            PlayerUnitUpdate();
 
             // アニメーション
-            //BaseAnimation();
+            BaseAnimation();
 
             // stateクラス実行
             state_manager.StateExe();
+
+            // 殺害
+            if (_target_object != null)
+            {
+                Destroy(_target_object);
+                _move_speed = 1.0f;
+            }
         }
 
-        //public GameObject GetAnimationObject(){ return anim_object; }
-        //public GameObject GetBaseObject() { return base_object; }
-
         // Collider2D
-        void OnTriggerStay2D(Collider2D unit_collider)
+        void OnTriggerEnter2D(Collider2D unit_collider)
         {
             // レイヤー名を取得
             string layer_name = LayerMask.LayerToName(unit_collider.gameObject.layer);
@@ -61,6 +60,8 @@ namespace character
             if (layer_name == "EnemyUnit" && _target_object == null)
             {
                 _target_object = unit_collider.gameObject;
+                _move_speed = 0.0f;
+                
             }
         }
 
@@ -69,8 +70,7 @@ namespace character
         {
             public override void Init()
             {
-                unit._move_speed = 0.0f;
-                unit.ChangeAnimation((int)MotionIndex.MOTION_STAY);
+
             }
             public override void Exe()
             {
@@ -87,15 +87,11 @@ namespace character
         {
             public override void Init()
             {
-                unit._move_speed = 1.0f;
-                unit.ChangeAnimation((int)MotionIndex.MOTION_WALK);
+
             }
             public override void Exe()
             {
-                if (unit._target_object != null) 
-                {
-                    unit.state_manager.ChangeState(new State_Attack());
-                }
+
             }
             public override void Exit()
             {
@@ -103,51 +99,32 @@ namespace character
             }
         }
 
-        //　攻撃
-        public class State_Attack : State
-        {
-            private int attack_cnt = 0;
-            public override void Init()
-            {
-                unit._move_speed = 0.0f;
-                unit.ChangeAnimation((int)MotionIndex.MOTION_STAY);
-            }
-            public override void Exe()
-            {
-                GameObject animator_obj = unit.state_manager.GetAnimatorObj();
-                if (unit._target_object != null)
-                {
-                    attack_cnt++;
-                    if (attack_cnt > 120)
-                    {
-                        unit.ChangeAnimation((int)MotionIndex.MOTIOM_ATTACK);
-                        attack_cnt = 0;
-                    }
-                }
-                Animator            animator = animator_obj.GetComponent<Animator>();
-                Animation           animation = animator_obj.GetComponent<Animation>();
-                AnimatorStateInfo   animInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-                if (animInfo.nameHash == Animator.StringToHash("Base Layer.Attack"))
-                {
-                    //if( !animation.isPlaying )
-                    if (animInfo.normalizedTime > 1.0f)
-                    {
-                        Destroy(unit._target_object);
-                        if (unit._target_object == null)
-                        {
-                            unit.state_manager.ChangeState(new State_Walk());
-                        }
-                        else 
-                        {
-                            unit.state_manager.ChangeState(new State_Attack());                        
-                        }
-                    }
-                }
-            }
-            public override void Exit()
+        // 状況クラスの定義
+        public class StateManager
+        {
+            // 状態を保持するプロパティを定義します。
+            private State CurrentState;
+
+            // 初期化
+            public void InitializeState(State state)
             {
-                unit._target_object = null;
+                state.Init();
+                CurrentState = state;
+            }
+
+            // 状態遷移
+            public void ChangeState( State next_state )
+            {
+                CurrentState.Exit();
+                next_state.Init();
+                CurrentState = next_state;
+            }
+
+            //保持している状態オブジェクトに対して処理を送ります。
+            public void StateExe()
+            {
+                CurrentState.Exe();
             }
         }
     }

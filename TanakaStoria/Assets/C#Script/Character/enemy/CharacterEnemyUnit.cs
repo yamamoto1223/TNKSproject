@@ -18,7 +18,7 @@ namespace character
 
         }
 
-        protected void EnemyUnitInit()
+        protected void InitEnemyUnit()
         {
             // 初期化
             _move_speed = 3.0f;
