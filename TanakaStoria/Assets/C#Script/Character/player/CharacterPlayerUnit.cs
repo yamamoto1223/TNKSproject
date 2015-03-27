@@ -18,12 +18,20 @@ namespace character
 
         }
 
-        protected void InitPlayerUnit()
+        // 初期化
+        protected void PlayerUnitInit()
         {
             // 初期化
             _move_speed = 1.0f;
             _direction.Set(1.0f, 0.0f);
         }
+
+        // 実行
+        protected void PlayerUnitUpdate()
+        {
+
+        }
+
 
     }
 }

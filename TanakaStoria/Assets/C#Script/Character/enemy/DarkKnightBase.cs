@@ -17,7 +17,7 @@ namespace character
             _animator = anim_object.GetComponent<Animator>();
 
             // 初期化
-            InitEnemyUnit();
+            EnemyUnitInit();
         }
 
         // Update is called once per frame
