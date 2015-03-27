@@ -404,6 +404,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af5fb823948b5cd459255546cbc73c91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _move_speed: 5
+  _direction: {x: 1, y: 0}
+  _chara_pos: {x: 0, y: 0}
+  _chara_vel: {x: 0, y: 0}
+  _target_object: {fileID: 0}
+  _animator: {fileID: 0}
 --- !u!4 &609269291
 Transform:
   m_ObjectHideFlags: 0
@@ -766,6 +772,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 545b7c715ee8da94bb2418603d61909b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _move_speed: 5
+  _direction: {x: 1, y: 0}
+  _chara_pos: {x: 0, y: 0}
+  _chara_vel: {x: 0, y: 0}
+  _target_object: {fileID: 0}
+  _animator: {fileID: 0}
 --- !u!1 &1155430587
 GameObject:
   m_ObjectHideFlags: 0
@@ -1215,8 +1227,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dc1c700a77e3534bb2cb086eca9b9a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _move_speed: 5
+  _direction: {x: 1, y: 0}
+  _chara_pos: {x: 0, y: 0}
+  _chara_vel: {x: 0, y: 0}
+  _target_object: {fileID: 0}
+  _animator: {fileID: 0}
   base_object: {fileID: 0}
   anim_object: {fileID: 2129370864}
+  parent: {fileID: 0}
 --- !u!50 &1732080813
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -1601,6 +1620,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe9238b8377865d40b3d10962addae0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _move_speed: 5
+  _direction: {x: 1, y: 0}
+  _chara_pos: {x: 0, y: 0}
+  _chara_vel: {x: 0, y: 0}
+  _target_object: {fileID: 0}
+  _animator: {fileID: 0}
   base_object: {fileID: 1848574386}
   anim_object: {fileID: 1791863707}
 --- !u!50 &1848574389
