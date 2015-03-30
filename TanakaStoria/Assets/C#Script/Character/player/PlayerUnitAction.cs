@@ -56,7 +56,8 @@ namespace character
             if (layer_name == "EnemyUnit" && _target_object == null)
             {
                 _target_object = unit_collider.gameObject;
-                
+                EnemyUnitBase enemy = _target_object.GetComponent<EnemyUnitBase>();
+
             }
         }
 
@@ -148,13 +149,21 @@ namespace character
                 Animator animator = animator_obj.GetComponent<Animator>();
                 AnimatorStateInfo animInfo = animator.GetCurrentAnimatorStateInfo(0);
 
+                // 敵情報
+                EnemyUnitBase enemy = unit._target_object.GetComponent<EnemyUnitBase>();
+
                 if (animInfo.nameHash == Animator.StringToHash("Base Layer.Attack"))
                 {
                     //if( !animation.isPlaying )
                     if (animInfo.normalizedTime > 1.0f)
                     {
-                        // 敵消去
-                        Destroy(unit._target_object);
+                        // ダメージ計算
+                        enemy._unit_hp -= unit._unit_atk;
+                        if (enemy._unit_hp < 0)
+                        {
+                            Destroy(unit._target_object);
+                        }
+
                         if (unit._target_object != null)
                         {
                             unit.state_manager.ChangeState(new State_Battle());

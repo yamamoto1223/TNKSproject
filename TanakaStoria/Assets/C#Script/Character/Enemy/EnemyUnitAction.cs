@@ -55,7 +55,7 @@ namespace character
             {
                 _target_object = unit_collider.gameObject;
 
-            }
+            }  
         }
 
         //　待機
@@ -152,7 +152,7 @@ namespace character
                     if (animInfo.normalizedTime > 1.0f)
                     {
                         // 敵消去
-                        Destroy(unit._target_object);
+                        //Destroy(unit._target_object);
                         if (unit._target_object != null)
                         {
                             unit.state_manager.ChangeState(new State_Battle());

@@ -7,6 +7,10 @@ namespace character
 {
     public class CharacterBase : MonoBehaviour
     {
+        // パラメータ
+        public int _unit_hp = 10000;
+        public int _unit_atk = 1000;
+
         public float _move_speed = 5.0f;
         public Vector2 _direction = new Vector2(1.0f, 0).normalized;  // 移動する向き
         public Vector2 _chara_pos;  // 座標
