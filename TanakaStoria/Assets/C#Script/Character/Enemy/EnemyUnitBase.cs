@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace character
 {
-    public class CharacterEnemyUnit : CharacterBase
+    public class EnemyUnitBase : CharacterBase
     {
 
         // Use this for initialization
@@ -25,19 +25,10 @@ namespace character
             _direction.Set(-1.0f, 0.0f);
         }
 
-        // Collider2D
-        void OnTriggerEnter2D(Collider2D unit_collider)
+        // 実行
+        protected void PlayerUnitUpdate()
         {
-            // レイヤー名を取得
-            string layer_name = LayerMask.LayerToName(unit_collider.gameObject.layer);
 
-            // 反対勢力ユニットの場合
-            if (layer_name == "PlayerUnit" && _target_object == null)
-            {
-                _target_object = unit_collider.gameObject;
-                _move_speed = 0.0f;
-
-            }
         }
 
 

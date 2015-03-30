@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace character
 {
-    public class CharacterPlayerUnit : CharacterBase
+    public class PlayerUnitBase : CharacterBase
     {
 
         // Use this for initialization

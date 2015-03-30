@@ -7,14 +7,16 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{072C4015-5D4C-F833-C6E9-99705615C06F}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <AssemblyName>Assembly-CSharp</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>4.6.3f1</UnityVersion>
@@ -55,11 +57,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\C#Script\Character\CharacterBase.cs" />
-    <Compile Include="Assets\C#Script\Character\Enemy\CharacterEnemyUnit.cs" />
-    <Compile Include="Assets\C#Script\Character\Enemy\DarkKnightBase.cs" />
-    <Compile Include="Assets\C#Script\Character\Player\CharacterPlayerUnit.cs" />
+    <Compile Include="Assets\C#Script\Character\Enemy\EnemyUnitBase.cs" />
+    <Compile Include="Assets\C#Script\Character\Enemy\EnemyUnitAction.cs" />
+    <Compile Include="Assets\C#Script\Character\Player\PlayerUnitBase.cs" />
     <Compile Include="Assets\C#Script\Character\Player\CharacterUnityChan.cs" />
-    <Compile Include="Assets\C#Script\Character\Player\KnightBase.cs" />
+    <Compile Include="Assets\C#Script\Character\Player\PlayerUnitAction.cs" />
     <Compile Include="Assets\C#Script\Define.cs" />
     <Compile Include="Assets\C#Script\GameManager.cs" />
     <Compile Include="Assets\Resources\Character\Player\UnityChan2D\Demo\Scripts\AudioSourceController.cs" />
