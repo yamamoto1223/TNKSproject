@@ -158,8 +158,9 @@ namespace character
                     if (animInfo.normalizedTime > 1.0f)
                     {
                         // ダメージ計算
-                        enemy._unit_hp -= unit._unit_atk;
-                        if (enemy._unit_hp < 0)
+                        int hp = enemy.GetUnitHp();
+                        enemy.SetUnitHp(hp - unit._unit_atk);
+                        if (enemy.GetUnitHp() <= 0) 
                         {
                             Destroy(unit._target_object);
                         }

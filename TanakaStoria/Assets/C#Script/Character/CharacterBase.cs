@@ -8,7 +8,7 @@ namespace character
     public class CharacterBase : MonoBehaviour
     {
         // パラメータ
-        public int _unit_hp = 10000;
+        public int _unit_hp = 2000;
         public int _unit_atk = 1000;
 
         public float _move_speed = 5.0f;
@@ -43,6 +43,10 @@ namespace character
         {
 
         }
+
+        // getter, setter
+        public void SetUnitHp(int hp) { _unit_hp = hp; }
+        public int  GetUnitHp() { return _unit_hp; }
         
         // ユニットの初期化
         protected void CharacterBaseInit()
