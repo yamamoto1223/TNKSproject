@@ -3,9 +3,9 @@ using System.Collections;
 
 namespace character
 {
+
     public class PlayerUnitBase : CharacterBase
     {
-
         // Use this for initialization
         void Start()
         {
@@ -15,7 +15,6 @@ namespace character
         // Update is called once per frame
         void Update()
         {
-
         }
 
         // 初期化
@@ -29,7 +28,6 @@ namespace character
         // 実行
         protected void PlayerUnitUpdate()
         {
-
         }
 
 

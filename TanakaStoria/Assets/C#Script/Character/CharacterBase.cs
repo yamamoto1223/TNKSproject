@@ -16,9 +16,8 @@ namespace character
         public Vector2 _chara_pos;  // 座標
         public Vector2 _chara_vel;  // 速度
 
-        public GameObject _target_object;
-        public Animator _animator;
-        //private GameManager     _game_manager;
+        public GameObject   _target_object;
+        public Animator     _animator;
 
         public StateManager state_manager = new StateManager();
       
@@ -31,7 +30,7 @@ namespace character
             "isDead",
         };
         protected int animIndex;// = MotionIndex.MOTION_STAY;
-        
+
         // Use this for initialization
         void Start()
         {

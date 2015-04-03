@@ -11,6 +11,7 @@ namespace character
         // スクリプトのインスペクタ上に設定項目が追加される 
         public GameObject base_object;  // 自身のキャラクターオブジェクト
         public GameObject anim_object;  // アニメーションオブジェクト
+        public GameObject effect_creater;   // エフェクト作成
 
         // 状態遷移
         public State_Walk walk = new State_Walk();
@@ -46,6 +47,12 @@ namespace character
             state_manager.StateExe();
         }
 
+        // エフェクト取得
+        EffectCreater GetEffectCreater()
+        {
+            return effect_creater.GetComponent<EffectCreater>();
+        }
+
         // Collider2D
         void OnTriggerStay2D(Collider2D unit_collider)
         {
@@ -56,7 +63,7 @@ namespace character
             if (layer_name == "EnemyUnit" && _target_object == null)
             {
                 _target_object = unit_collider.gameObject;
-                EnemyUnitBase enemy = _target_object.GetComponent<EnemyUnitBase>();
+                //EnemyUnitBase enemy = _target_object.GetComponent<EnemyUnitBase>();
 
             }
         }
@@ -152,6 +159,7 @@ namespace character
                 // 敵情報
                 EnemyUnitBase enemy = unit._target_object.GetComponent<EnemyUnitBase>();
 
+                     
                 if (animInfo.nameHash == Animator.StringToHash("Base Layer.Attack"))
                 {
                     //if( !animation.isPlaying )
@@ -164,6 +172,10 @@ namespace character
                         {
                             Destroy(unit._target_object);
                         }
+                        // エフェクト
+                        //EffectCreater effect = unit.GetEffectCreater();
+                        //effect.CreateEffect(enemy._chara_pos);
+         
 
                         if (unit._target_object != null)
                         {
