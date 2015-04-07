@@ -7,21 +7,22 @@ namespace character
 {
     public class CharacterBase : MonoBehaviour
     {
-        // パラメータ
-        public int _unit_hp = 2000;
-        public int _unit_atk = 1000;
+        // paramator
+        public int      iUnitHp         = 2000;
+        public int      iUnitAtk        = 1000;
+        public float    fUnitMoveSpd    = 5.0f;
 
-        public float _move_speed = 5.0f;
-        public Vector2 _direction = new Vector2(1.0f, 0).normalized;  // 移動する向き
-        public Vector2 _chara_pos;  // 座標
-        public Vector2 _chara_vel;  // 速度
+        // vector2D
+        public Vector2 vDirection2D = new Vector2(1.0f, 0).normalized;  // 移動する向き
+        public Vector2 vUnitPosition2D;  // 座標
+        public Vector2 vUnitVelocity2D;  // 速度
 
-        public GameObject   _target_object;
-        public Animator     _animator;
-
-        public StateManager state_manager = new StateManager();
+        // conpornent,gameobjedct
+        public GameObject   objTargetObject;    // 敵オブジェクト
+        public Animator     cnpAnimator;        // アニメーター
+        public StateManager cStateManager = new StateManager(); // 状態遷移
       
-        // アニメーションテーブル
+        // animationtabale
         protected string[] AnimationTable = new string[(int)MotionIndex.MOTION_MAX]{
             "isStay",
             "isWalk",
@@ -29,7 +30,7 @@ namespace character
             "isDamage",
             "isDead",
         };
-        protected int animIndex;// = MotionIndex.MOTION_STAY;
+        protected int iAnimationIndex; 
 
         // Use this for initialization
         void Start()
@@ -44,8 +45,8 @@ namespace character
         }
 
         // getter, setter
-        public void SetUnitHp(int hp) { _unit_hp = hp; }
-        public int  GetUnitHp() { return _unit_hp; }
+        public void SetUnitHp(int hp)   { iUnitHp = hp; }
+        public int  GetUnitHp()         { return iUnitHp; }
         
         // ユニットの初期化
         protected void CharacterBaseInit()
@@ -56,70 +57,36 @@ namespace character
         // ユニットの基本動作
         protected void CharacterBaseUpdate()
         {
-            // 座標・速度
-            //_chara_pos = rigidbody2D.position;   // 座標を取得
-            //_chara_vel = rigidbody2D.velocity;   // 速度を取得
-
             // 移動
-            Move(_direction);
-
-            // アニメーション
-            //BaseAnimation();
+            Move(vDirection2D);
 
             // 自動スプライト反転
             SpriteReverse();
         }
 
-        // animation
-        protected void BaseAnimation()
-        {
-
-            // 移動
-            if (_chara_vel.x < -0.1f || _chara_vel.x > 0.1f)
-            {
-                animIndex = (int)MotionIndex.MOTION_WALK;
-            // 待機
-            }else{
-                animIndex = (int)MotionIndex.MOTION_STAY;
-            }
-
-            // 攻撃
-            if (_target_object != null)
-            {
-                animIndex = (int)MotionIndex.MOTIOM_ATTACK;
-            }
-
-            // アニメーション変更
-            for (int i = 0; i < (int)MotionIndex.MOTION_MAX; i++)
-            {
-                bool animFlag = i == (int)animIndex;
-                _animator.SetBool(AnimationTable[i], animFlag);
-
-            }
-        }
-
+        // アニメーション変更
         public void ChangeAnimation( int index )
         {
-            animIndex = index;
+            iAnimationIndex = index;
 
             // アニメーション変更
             for (int i = 0; i < (int)MotionIndex.MOTION_MAX; i++)
             {
-                bool animFlag = i == (int)animIndex;
-                _animator.SetBool(AnimationTable[i], animFlag);
+                bool animFlag = i == (int)iAnimationIndex;
+                cnpAnimator.SetBool(AnimationTable[i], animFlag);
 
             }
         }
 
-        // reverse sprite
+        // スプライト反転
         protected void SpriteReverse()
         {
             Vector3 scale = transform.localScale; // サイズの取得
-            if( _chara_vel.x >= 0.1f )
+            if( vUnitVelocity2D.x >= 0.1f )
             {
                 scale.x = 1; // そのまま（右向き）
             }
-            if (_chara_vel.x <= -0.1f )
+            if (vUnitVelocity2D.x <= -0.1f )
             {
                 scale.x = -1; // 反転する（左向き）
             }
@@ -131,22 +98,20 @@ namespace character
         // move
         public void Move(Vector2 direction)
         {
-            //if (_chara_pos.x > 4.0f)
-            //{
-            //    direction.Set(0.0f, 0.0f);
-            //}
-            rigidbody2D.velocity = direction * _move_speed;
-
+            rigidbody2D.velocity = direction * fUnitMoveSpd;
         }
 
         // Stateクラス
         public abstract class State
         {
+            // Instance
             protected GameObject animator;
             protected CharacterBase unit;
+            protected EffectCreater effect;
+            // setter
             public void SetUnitInstance(CharacterBase parent) { unit = parent; }
             public void SetAnimatorObj(GameObject obj) { animator = obj; }
-
+            public void SetEffectCreater(EffectCreater _effect) { effect = _effect; }
             //状態に依存する振る舞いのインタフェースを定義します。
             public abstract void Init();
             public abstract void Exe();
@@ -160,12 +125,17 @@ namespace character
             private State current_state;
             protected GameObject animator;
             protected CharacterBase unit;
+            protected EffectCreater effect;
 
             // Setter&Getter関数
-            public void SetAnimatorObj(GameObject obj) { animator = obj; }
-            public GameObject GetAnimatorObj() { return animator; }
-            public void SetUnitInstance(CharacterBase parent) { unit = parent; }
-            public CharacterBase GetUnitInstance() { return unit; }
+            public void             SetAnimatorObj(GameObject obj) { animator = obj; }
+            public GameObject       GetAnimatorObj()  { return animator; }
+            
+            public void             SetUnitInstance(CharacterBase parent) { unit = parent; }
+            public CharacterBase    GetUnitInstance() { return unit; }
+            
+            public void             SetEffectCreater(EffectCreater _effect) { effect = _effect; }
+            public EffectCreater    GetEffectCreater() { return effect; }
 
 
             // 初期化
@@ -174,6 +144,7 @@ namespace character
                 // インスタンスセット
                 state.SetUnitInstance(unit);
                 state.SetAnimatorObj(animator);
+                state.SetEffectCreater(effect);
 
                 state.Init();
                 current_state = state;
@@ -187,6 +158,8 @@ namespace character
 
                 // 次の状態へ遷移する準備
                 next_state.SetUnitInstance(unit);
+                next_state.SetEffectCreater(effect);
+                next_state.SetAnimatorObj(animator);
                 next_state.Init();
                 current_state = next_state;
             }

@@ -11,7 +11,9 @@ public class Effect_DamageNumGroup : MonoBehaviour {
     public Effect_DamageNum damage_text;
     public Text text;
 
-    public string damage_num;
+    // ダメージ値
+    public string strDamage;
+    public int iDamage;
 
     // Use this for initialization
     void Start () 
@@ -20,7 +22,7 @@ public class Effect_DamageNumGroup : MonoBehaviour {
         damage_text = child_object.GetComponent<Effect_DamageNum>();
 
         // ダメージ値
-        text.text = damage_num;
+        text.text = strDamage;
     }
 
     // Update is called once per frame
@@ -35,6 +37,7 @@ public class Effect_DamageNumGroup : MonoBehaviour {
         
     }
     // ダメージ値の代入
-    public void SetDamageNum(string str) { damage_num = str; }
+    public void SetDamageStr(string str) { strDamage = str; }
+    public void SetDamageNum(int value) { iDamage = value; }
     public void SetBaseObject(GameObject obj) { base_object = obj; }
 }

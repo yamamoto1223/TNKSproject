@@ -9,9 +9,9 @@ namespace character
     public class PlayerUnitAction : PlayerUnitBase
     {
         // スクリプトのインスペクタ上に設定項目が追加される 
-        public GameObject base_object;  // 自身のキャラクターオブジェクト
-        public GameObject anim_object;  // アニメーションオブジェクト
-        public GameObject effect_creater;   // エフェクト作成
+        public GameObject objBase;          // 自身のキャラクターオブジェクト
+        public GameObject objAnimation;     // アニメーションオブジェクト
+        public GameObject objEffectCreater; // エフェクト作成
 
         // 状態遷移
         public State_Walk walk = new State_Walk();
@@ -23,34 +23,39 @@ namespace character
         // Use this for initialization
         void Start()
         {
-            _animator = anim_object.GetComponent<Animator>();
+            cnpAnimator = objAnimation.GetComponent<Animator>();
 
             // 初期化
             CharacterBaseInit();
             PlayerUnitInit();
 
             // stateクラス初期化
-            state_manager.SetUnitInstance(this);
-            state_manager.SetAnimatorObj(anim_object);
-            state_manager.InitializeState(walk);
+            cStateManager.SetUnitInstance(this);
+            cStateManager.SetAnimatorObj(objAnimation);
+            cStateManager.SetEffectCreater(GetEffectCreater());
+            cStateManager.InitializeState(walk);
 
         }
 
         // Update is called once per frame
         void Update()
         {
+            // 座標・速度
+            vUnitPosition2D = rigidbody2D.position;   // 座標を取得
+            vUnitVelocity2D = rigidbody2D.velocity;   // 速度を取得
+              
             // キャラクタの基本動作
             CharacterBaseUpdate();
             PlayerUnitUpdate();
 
             // stateクラス実行
-            state_manager.StateExe();
+            cStateManager.StateExe();
         }
 
         // エフェクト取得
-        EffectCreater GetEffectCreater()
+        public EffectCreater GetEffectCreater()
         {
-            return effect_creater.GetComponent<EffectCreater>();
+            return objEffectCreater.GetComponent<EffectCreater>();
         }
 
         // Collider2D
@@ -60,11 +65,10 @@ namespace character
             string layer_name = LayerMask.LayerToName(unit_collider.gameObject.layer);
 
             // 反対勢力ユニットの場合
-            if (layer_name == "EnemyUnit" && _target_object == null)
+            if (layer_name == "EnemyUnit" && objTargetObject == null)
             {
-                _target_object = unit_collider.gameObject;
-                //EnemyUnitBase enemy = _target_object.GetComponent<EnemyUnitBase>();
-
+                objTargetObject = unit_collider.gameObject;
+                //EnemyUnitBase enemy = objTargetObject.GetComponent<EnemyUnitBase>();
             }
         }
 
@@ -73,7 +77,7 @@ namespace character
         {
             public override void Init()
             {
-                unit._move_speed = 0.0f;
+                unit.fUnitMoveSpd = 0.0f;
                 unit.ChangeAnimation((int)MotionIndex.MOTION_STAY);
             }
             public override void Exe()
@@ -91,14 +95,14 @@ namespace character
         {
             public override void Init()
             {
-                unit._move_speed = 1.0f;
+                unit.fUnitMoveSpd = 1.0f;
                 unit.ChangeAnimation((int)MotionIndex.MOTION_WALK);
             }
             public override void Exe()
             {
-                if (unit._target_object != null)
+                if (unit.objTargetObject != null)
                 {
-                    unit.state_manager.ChangeState(new State_Attack());
+                    unit.cStateManager.ChangeState(new State_Attack());
                 }
             }
             public override void Exit()
@@ -113,31 +117,31 @@ namespace character
             private int attack_cnt = 0;
             public override void Init()
             {
-                unit._move_speed = 0.0f;
+                unit.fUnitMoveSpd = 0.0f;
                 unit.ChangeAnimation((int)MotionIndex.MOTION_STAY);
             }
             public override void Exe()
             {
-                //GameObject animator_obj = unit.state_manager.GetAnimatorObj();
+                //GameObject animator_obj = unit.cStateManager.GetAnimatorObj();
                 // 敵がいない場合は移動
-                if (unit._target_object == null)
+                if (unit.objTargetObject == null)
                 {
-                    unit.state_manager.ChangeState(new State_Walk());
+                    unit.cStateManager.ChangeState(new State_Walk());
                 }
 
                 // 時間経過で攻撃へ
-                if (unit._target_object != null)
+                if (unit.objTargetObject != null)
                 {
                     attack_cnt++;
                     if (attack_cnt > 120)
                     {
-                        unit.state_manager.ChangeState(new State_Attack());
+                        unit.cStateManager.ChangeState(new State_Attack());
                     }
                 }
             }
             public override void Exit()
             {
-                //unit._target_object = null;
+                //unit.objTargetObject = null;
             }
         }
 
@@ -146,51 +150,56 @@ namespace character
         { 
             public override void Init()
             {
-                unit._move_speed = 0.0f;
+                unit.fUnitMoveSpd = 0.0f;
                 unit.ChangeAnimation((int)MotionIndex.MOTIOM_ATTACK);
             }
             public override void Exe()
             {
+                if (unit.objTargetObject == null)
+                {
+                    unit.cStateManager.ChangeState(new State_Walk());
+                    return;
+                }
                 // アニメーションデータ
-                GameObject animator_obj = unit.state_manager.GetAnimatorObj();
+                GameObject animator_obj = unit.cStateManager.GetAnimatorObj();
                 Animator animator = animator_obj.GetComponent<Animator>();
                 AnimatorStateInfo animInfo = animator.GetCurrentAnimatorStateInfo(0);
-
-                // 敵情報
-                EnemyUnitBase enemy = unit._target_object.GetComponent<EnemyUnitBase>();
-
                      
                 if (animInfo.nameHash == Animator.StringToHash("Base Layer.Attack"))
                 {
                     //if( !animation.isPlaying )
                     if (animInfo.normalizedTime > 1.0f)
                     {
+                        // 敵情報
+                        EnemyUnitBase enemy = unit.objTargetObject.GetComponent<EnemyUnitBase>();
+                        
                         // ダメージ計算
                         int hp = enemy.GetUnitHp();
-                        enemy.SetUnitHp(hp - unit._unit_atk);
+                        enemy.SetUnitHp(hp - unit.iUnitAtk);
                         if (enemy.GetUnitHp() <= 0) 
                         {
-                            Destroy(unit._target_object);
+                            Destroy(unit.objTargetObject);
                         }
                         // エフェクト
-                        //EffectCreater effect = unit.GetEffectCreater();
-                        //effect.CreateEffect(enemy._chara_pos);
+                        effect.CreateEffect_DamageNum(enemy.vUnitPosition2D, unit.iUnitAtk);
          
 
-                        if (unit._target_object != null)
+                        if (unit.objTargetObject != null)
                         {
-                            unit.state_manager.ChangeState(new State_Battle());
+                            unit.cStateManager.ChangeState(new State_Battle());
+                            return;
                         }
                         else 
                         {
-                            unit.state_manager.ChangeState(new State_Walk());
+                            unit.cStateManager.ChangeState(new State_Walk());
+                            return;
                         }
                     }
                 }
             }
             public override void Exit()
             {
-                unit._target_object = null;
+                unit.objTargetObject = null;
             }
             
         }

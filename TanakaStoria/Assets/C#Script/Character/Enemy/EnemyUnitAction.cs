@@ -23,26 +23,30 @@ namespace character
         void Start()
         {
             //_character = GameObject.Find("character_dark_knight");
-            _animator = anim_object.GetComponent<Animator>();
+            cnpAnimator = anim_object.GetComponent<Animator>();
 
             // 初期化
             EnemyUnitInit();
 
             // stateクラス初期化
-            state_manager.SetUnitInstance(this);
-            state_manager.SetAnimatorObj(anim_object);
-            state_manager.InitializeState(walk);
+            cStateManager.SetUnitInstance(this);
+            cStateManager.SetAnimatorObj(anim_object);
+            cStateManager.InitializeState(walk);
         }
 
         // Update is called once per frame
         void Update()
         {
+            // 座標・速度
+            vUnitPosition2D = rigidbody2D.position;   // 座標を取得
+            vUnitVelocity2D = rigidbody2D.velocity;   // 速度を取得
+
             // キャラクタの基本動作
             CharacterBaseUpdate();
             PlayerUnitUpdate();
 
             // stateクラス実行
-            state_manager.StateExe();
+            cStateManager.StateExe();
         }
         // Collider2D
         void OnTriggerStay2D(Collider2D unit_collider)
@@ -51,9 +55,9 @@ namespace character
             string layer_name = LayerMask.LayerToName(unit_collider.gameObject.layer);
 
             // 反対勢力ユニットの場合
-            if (layer_name == "PlayerUnit" && _target_object == null)
+            if (layer_name == "PlayerUnit" && objTargetObject == null)
             {
-                _target_object = unit_collider.gameObject;
+                objTargetObject = unit_collider.gameObject;
 
             }  
         }
@@ -63,7 +67,7 @@ namespace character
         {
             public override void Init()
             {
-                unit._move_speed = 0.0f;
+                unit.fUnitMoveSpd = 0.0f;
                 unit.ChangeAnimation((int)MotionIndex.MOTION_STAY);
             }
             public override void Exe()
@@ -81,14 +85,14 @@ namespace character
         {
             public override void Init()
             {
-                unit._move_speed = 1.0f;
+                unit.fUnitMoveSpd = 1.0f;
                 unit.ChangeAnimation((int)MotionIndex.MOTION_WALK);
             }
             public override void Exe()
             {
-                if (unit._target_object != null)
+                if (unit.objTargetObject != null)
                 {
-                    unit.state_manager.ChangeState(new State_Attack());
+                    unit.cStateManager.ChangeState(new State_Attack());
                 }
             }
             public override void Exit()
@@ -103,31 +107,31 @@ namespace character
             private int attack_cnt = 0;
             public override void Init()
             {
-                unit._move_speed = 0.0f;
+                unit.fUnitMoveSpd = 0.0f;
                 unit.ChangeAnimation((int)MotionIndex.MOTION_STAY);
             }
             public override void Exe()
             {
-                //GameObject animator_obj = unit.state_manager.GetAnimatorObj();
+                //GameObject animator_obj = unit.cStateManager.GetAnimatorObj();
                 // 敵がいない場合は移動
-                if (unit._target_object == null)
+                if (unit.objTargetObject == null)
                 {
-                    unit.state_manager.ChangeState(new State_Walk());
+                    unit.cStateManager.ChangeState(new State_Walk());
                 }
 
                 // 時間経過で攻撃へ
-                if (unit._target_object != null)
+                if (unit.objTargetObject != null)
                 {
                     attack_cnt++;
                     if (attack_cnt > 120)
                     {
-                        unit.state_manager.ChangeState(new State_Attack());
+                        unit.cStateManager.ChangeState(new State_Attack());
                     }
                 }
             }
             public override void Exit()
             {
-                //unit._target_object = null;
+                //unit.objTargetObject = null;
             }
         }
 
@@ -136,13 +140,13 @@ namespace character
         {
             public override void Init()
             {
-                unit._move_speed = 0.0f;
+                unit.fUnitMoveSpd = 0.0f;
                 unit.ChangeAnimation((int)MotionIndex.MOTIOM_ATTACK);
             }
             public override void Exe()
             {
                 // アニメーションデータ
-                GameObject animator_obj = unit.state_manager.GetAnimatorObj();
+                GameObject animator_obj = unit.cStateManager.GetAnimatorObj();
                 Animator animator = animator_obj.GetComponent<Animator>();
                 AnimatorStateInfo animInfo = animator.GetCurrentAnimatorStateInfo(0);
 
@@ -152,21 +156,21 @@ namespace character
                     if (animInfo.normalizedTime > 1.0f)
                     {
                         // 敵消去
-                        //Destroy(unit._target_object);
-                        if (unit._target_object != null)
+                        //Destroy(unit.objTargetObject);
+                        if (unit.objTargetObject != null)
                         {
-                            unit.state_manager.ChangeState(new State_Battle());
+                            unit.cStateManager.ChangeState(new State_Battle());
                         }
                         else
                         {
-                            unit.state_manager.ChangeState(new State_Walk());
+                            unit.cStateManager.ChangeState(new State_Walk());
                         }
                     }
                 }
             }
             public override void Exit()
             {
-                unit._target_object = null;
+                unit.objTargetObject = null;
             }
 
         }

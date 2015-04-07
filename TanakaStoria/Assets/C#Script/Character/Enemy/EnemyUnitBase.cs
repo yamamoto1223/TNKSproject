@@ -21,8 +21,8 @@ namespace character
         protected void EnemyUnitInit()
         {
             // 初期化
-            _move_speed = 3.0f;
-            _direction.Set(-1.0f, 0.0f);
+            fUnitMoveSpd = 5.0f;
+            vDirection2D.Set(-1.0f, 0.0f);
         }
 
         // 実行

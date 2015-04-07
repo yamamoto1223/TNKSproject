@@ -21,8 +21,8 @@ namespace character
         protected void PlayerUnitInit()
         {
             // 初期化
-            _move_speed = 1.0f;
-            _direction.Set(1.0f, 0.0f);
+            fUnitMoveSpd = 1.0f;
+            vDirection2D.Set(1.0f, 0.0f);
         }
 
         // 実行

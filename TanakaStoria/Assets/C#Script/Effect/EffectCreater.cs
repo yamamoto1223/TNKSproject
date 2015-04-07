@@ -15,12 +15,16 @@ public class EffectCreater : MonoBehaviour {
 	
 	}
 
-    public void CreateEffect(Vector3 pos)
+    public void CreateEffect_DamageNum(Vector3 pos, int damage)
     {
+        // 桁数取得
+        int digit = damage.ToString().Length;
+
         // エフェクト
         GameObject obj = (GameObject)Instantiate(SampleEffect, pos, Quaternion.identity);
-        Effect_DamageNumGroup c = obj.GetComponent<Effect_DamageNumGroup>();
-        c.SetBaseObject(obj);
-        c.SetDamageNum("9999");
+        Effect_DamageNumGroup effect = obj.GetComponent<Effect_DamageNumGroup>();
+        effect.SetBaseObject(obj);
+        effect.SetDamageNum(damage);
+        effect.SetDamageStr("9999");
     }
 }
