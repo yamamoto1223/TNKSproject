@@ -29,7 +29,7 @@ public class Effect_DamageNumGroup : MonoBehaviour {
     void Update()
     {
         // アニメーション終了
-        if (damage_text.is_finish)
+        if (damage_text.is_finish) 
         {
             Destroy(base_object);
             Destroy(child_object);
@@ -40,4 +40,5 @@ public class Effect_DamageNumGroup : MonoBehaviour {
     public void SetDamageStr(string str) { strDamage = str; }
     public void SetDamageNum(int value) { iDamage = value; }
     public void SetBaseObject(GameObject obj) { base_object = obj; }
+    public GameObject GetNumberObj() { return child_object; }
 }

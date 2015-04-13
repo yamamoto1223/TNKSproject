@@ -181,7 +181,7 @@ namespace character
                             Destroy(unit.objTargetObject);
                         }
                         // エフェクト
-                        effect.CreateEffect_DamageNum(enemy.vUnitPosition2D, unit.iUnitAtk);
+                        effect.CreateEffect_DamageNum(enemy.transform.position, unit.iUnitAtk);
          
 
                         if (unit.objTargetObject != null)

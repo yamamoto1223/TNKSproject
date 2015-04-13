@@ -418,17 +418,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dc1c700a77e3534bb2cb086eca9b9a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unit_hp: 2000
-  _unit_atk: 1000
-  _move_speed: 5
-  _direction: {x: 1, y: 0}
-  _chara_pos: {x: 0, y: 0}
-  _chara_vel: {x: 0, y: 0}
-  _target_object: {fileID: 0}
-  _animator: {fileID: 0}
-  base_object: {fileID: 0}
-  anim_object: {fileID: 140340}
-  effect_creater: {fileID: 0}
+  iUnitHp: 2000
+  iUnitAtk: 1000
+  fUnitMoveSpd: 5
+  vDirection2D: {x: 1, y: 0}
+  vUnitPosition2D: {x: 0, y: 0}
+  vUnitVelocity2D: {x: 0, y: 0}
+  objTargetObject: {fileID: 0}
+  cnpAnimator: {fileID: 0}
+  objBase: {fileID: 140346}
+  objAnimation: {fileID: 140340}
+  objEffectCreater: {fileID: 117818, guid: c76508b5b29b84941811975862f9b274, type: 2}
   parent: {fileID: 0}
 --- !u!212 &21240342
 SpriteRenderer:

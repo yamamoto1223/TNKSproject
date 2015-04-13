@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour {
             // ランダム値
             float rand_y = Random.value * 3.0f - 2.0f;
             // インスタンス生成
-            Instantiate(CharacterKnight, new Vector3(-7, rand_y, 0), Quaternion.identity);
+            Instantiate(CharacterKnight, new Vector3(-5, rand_y, 0), Quaternion.identity);
         }
 
         // 一定時間ごとに敵生成
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour {
             // ランダム値
             float rand_y = Random.value * 3.0f - 2.0f;
             // インスタンス生成
-            Instantiate(CharacterDarkKnight, new Vector3(10, rand_y, 0), Quaternion.identity);
+            Instantiate(CharacterDarkKnight, new Vector3(5, rand_y, 0), Quaternion.identity);
         }
 
        
