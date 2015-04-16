@@ -5,18 +5,11 @@ public class EffectCreater : MonoBehaviour {
 
     public GameObject SampleEffect;
 
-    // Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
+    // カメラにアタッチ
+    //[RequireComponent(typeof(Camera))]
     public void CreateEffect_DamageNum(Vector3 pos, int damage)
     {
+        string str_damage = damage.ToString();
         // 桁数取得
         //int digit = damage.ToString().Length;
 
@@ -27,18 +20,32 @@ public class EffectCreater : MonoBehaviour {
         GameObject obj = (GameObject)Instantiate(SampleEffect, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
         Effect_DamageNumGroup effect = obj.GetComponent<Effect_DamageNumGroup>();
 
-        // position sample  
-        //GameObject objNumObject = effect.GetNumberObj();
-        //RectTransform t = objNumObject.GetComponent<RectTransform>();
-        //t.position = pos*100;
-
-        // 座標設定
+        
+        // スクリーン座標からワールド座標へ
         obj.transform.SetParent(root.transform);
-        root.transform.position = pos*24;   // なんで？
+        Camera _camera = GameObject.Find("MainCamera").camera;
+        //root.transform.position = GameObject.Find("MainCamera").camera.WorldToScreenPoint(pos);
+        var sp = _camera.ViewportToWorldPoint( new Vector3(1,1,0) );    // 画面右上のワールド座標 
+
+        float sw = sp.x; 
+        float sh = sp.y;
+
+        // スクリーンサイズ
+        float w = Screen.width;     
+        float h = Screen.height;
+
+        pos.x = pos.x * ((w/2.0f) / sw);
+        pos.y = pos.y * ((h/2.0f) / sh);
+        root.transform.position = pos;
+   
+        //GameObject objNumObject = effect.GetN umberObj();
+        //RectTransform t = objNumObject.GetComponent<RectTransform>();
+        //t.position = pos;
+          
         
         effect.SetBaseObject(root);
-        effect.SetDamageNum(damage);
-        effect.SetDamageStr("9999");
+        //effect.SetDamageNum(damage);
+        effect.SetDamageStr(str_damage);
     }
 }
 
